@@ -63,11 +63,7 @@ public class PlayerController : MonoBehaviour {
 
     public void Start() {
         thisPlayer = new Player(GetComponent<GameObject>());
-
-        if (GetComponent<Renderer>().CompareTag("Scientist"))
-        {
-            thisPlayer.setIsScientist(true);
-        }
+        
         if(GetComponent<Renderer>().CompareTag("Sick")) //Pour le premier malade
         {
             GetComponent<Renderer>().material.color = Color.red;
@@ -78,16 +74,28 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-       // Debug.Log("" + GetComponent<Renderer>().name + " : sickDate : " + thisPlayer.getSickDate());
-       // Debug.Log("" + GetComponent<Renderer>().name + " : state : " + thisPlayer.getState());
 
         if (thisPlayer.getState() == "beforeSick")
         {
-         //   Debug.Log("thisPlayer.getSickDate() de " + GetComponent<Renderer>().name + " : " + thisPlayer.getSickDate());
             if ((Time.time - thisPlayer.getSickDate()) >= 5)
             {
                 GetComponent<Renderer>().material.color = Color.red;
                 thisPlayer.setState("sick");
+            }
+        }
+        if (thisPlayer.getState() == "sick")
+        {
+            if ((Time.time - thisPlayer.getSickDate()) >= 30)
+            {
+                GetComponent<Renderer>().material.color = Color.black;
+                thisPlayer.setState("dead");
+            }
+        }
+        if (thisPlayer.getState() == "dead")
+        {
+            if ((Time.time - thisPlayer.getSickDate()) >= 35)
+            {
+                Destroy(GetComponent<Rigidbody>().gameObject);
             }
         }
     }
