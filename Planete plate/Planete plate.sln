@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2015
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planete plate", "Planete plate.csproj", "{FA3E9DC9-0F38-B697-038A-EACC883E6E57}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planete plate", "Assembly-CSharp.csproj", "{99374CF0-37B8-209B-5AD3-A6CB4585749C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,12 +9,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FA3E9DC9-0F38-B697-038A-EACC883E6E57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA3E9DC9-0F38-B697-038A-EACC883E6E57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA3E9DC9-0F38-B697-038A-EACC883E6E57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA3E9DC9-0F38-B697-038A-EACC883E6E57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99374CF0-37B8-209B-5AD3-A6CB4585749C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99374CF0-37B8-209B-5AD3-A6CB4585749C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99374CF0-37B8-209B-5AD3-A6CB4585749C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99374CF0-37B8-209B-5AD3-A6CB4585749C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal
