@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\ScientistBehaviour.cs" />
      <Compile Include="Assets\Scripts\collisions.cs" />
      <Compile Include="Assets\Scripts\navController.cs" />
+     <Compile Include="Assets\Scripts\panelController.cs" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\VertexColorTrees\Shaders\VertexColorUnlit.shader" />
