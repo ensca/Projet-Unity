@@ -37,25 +37,7 @@ public class GameController : MonoBehaviour {
     public Text txtMorts;
     public Text txtScientifiques;
 
-
-
-
-    /*
-        IEnumerator peopleInstantiation()
-        {
-            while (true)
-            {
-                for (int i = 0; i < peopleCount; i++)
-                {
-                    Vector3 peoplePosition = new Vector3(Random.Range(-peopleValues.x, peopleValues.x), peopleValues.y, Random.Range(-peopleValues.z, peopleValues.z));
-                    Quaternion peopleRotation = Quaternion.identity;
-                    Instantiate(person, peoplePosition, peopleRotation);
-                }
-            }
-        }
-    */
-
-    // Use this for initialization
+    
     void Start () {
 
         //Initialisations des données
@@ -73,6 +55,8 @@ public class GameController : MonoBehaviour {
 
         guide = GameObject.FindWithTag("Guide"); // Dans ce cas, on défini manuellement un guide parmi les scientifiques
         guide.GetComponent<Renderer>().material.color = Color.yellow;
+        guide.GetComponent<PlayerController>().thisPlayer.setIsScientist(true);
+        guide.GetComponent<PlayerController>().thisPlayer.setIsGuide(true);
 
         startTime = Time.time;
 

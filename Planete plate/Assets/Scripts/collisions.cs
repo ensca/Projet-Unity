@@ -36,8 +36,9 @@ public class collisions : MonoBehaviour
         //Si le navMeshAgent rencontré est un scientifique
         else
         {
-            if ((GetComponent<Renderer>().CompareTag("Guide") || GetComponent<Renderer>().material.color == Color.magenta) && collision.gameObject.GetComponent<Renderer>().material.color != Color.magenta && collision.gameObject.GetComponent<Renderer>().CompareTag("Guide")== false)
+            if ((GetComponent<Renderer>().CompareTag("Guide") || collision.gameObject.GetComponent<PlayerController>().thisPlayer.getIsScientist() == true && collision.gameObject.GetComponent<Renderer>().material.color != Color.magenta && collision.gameObject.GetComponent<Renderer>().CompareTag("Guide") == false))
             {
+                collision.gameObject.GetComponent<PlayerController>().thisPlayer.setIsScientist(true);
                 collision.gameObject.GetComponent<Renderer>().material.color = Color.magenta;
                 countScientist++;
                 gameController.addScientist(countScientist);
@@ -46,8 +47,6 @@ public class collisions : MonoBehaviour
                 gameController.UpdateMapCity(collision.gameObject.GetComponent<PlayerController>().thisPlayer.getMapCity());
                 //Pas sûr que ce soit utile...
                 gameController.UpdateMapCity(thisPlayer.getMapCity());
-
-
 
                 /*
                 if (GetComponent<Renderer>().material.color != Color.magenta)
@@ -63,26 +62,26 @@ public class collisions : MonoBehaviour
         //Collision entre des navMeshAgent
         if (collision.gameObject.GetComponent<Renderer>().CompareTag("Classic") == true || collision.gameObject.GetComponent<Renderer>().CompareTag("Scientist") == false)    //Les scientifiques ne peuvent pas être malades pour le moment
         {
-            //Si un navMeshAgent rencontre un thisPlayer malade (les scientifiques et le guide ne peuvent pas tomber malade)
-            //Le navMeshAgent contracte la maladie mais n'est pas encore déclarer malade
+            //Si un navMeshAgent rencontre un thisPlayer malade ou en période d'incubation (les scientifiques et le guide ne peuvent pas tomber malade)
+            //Le navMeshAgent contracte la maladie mais n'est pas encore déclaré malade
             //Il devient orange pendant cette période d'incubation
-            if (GetComponent<PlayerController>().thisPlayer.getState() == "sick" && collision.gameObject.GetComponent<Renderer>().CompareTag("Scientist") == false && collision.gameObject.GetComponent<Renderer>().CompareTag("Guide") == false && GetComponent<Renderer>().CompareTag("Guide") == false)
+            if ((GetComponent<PlayerController>().thisPlayer.getState() == "sick" || GetComponent<PlayerController>().thisPlayer.getState() == "beforeSick") && collision.gameObject.GetComponent<Renderer>().CompareTag("Scientist") == false && (collision.gameObject.GetComponent<PlayerController>().thisPlayer.getState() != "sick" && collision.gameObject.GetComponent<PlayerController>().thisPlayer.getState() != "beforeSick" && collision.gameObject.GetComponent<PlayerController>().thisPlayer.getState() != "dead"))
             {
                 collision.gameObject.GetComponent<PlayerController>().thisPlayer.setState("beforeSick");
                 collision.gameObject.GetComponent<PlayerController>().thisPlayer.setSickDate(Time.time);
                 collision.gameObject.GetComponent<Renderer>().material.color = new Color32(255, 89, 0, 0);
             }
 
-            //Si un navMeshAgent rencontre un navMeshAgent malade (les scientifiques et le guide ne peuvent pas tomber malade)
-            //Le navMeshAgent contracte la maladie mais n'est pas encore déclarer malade
+            //Si un navMeshAgent rencontre un navMeshAgent malade ou en période d'incubation(les scientifiques et le guide ne peuvent pas tomber malade)
+            //Le navMeshAgent contracte la maladie mais n'est pas encore déclaré malade
             //Il devient orange pendant cette période d'incubation
-            if (collision.gameObject.GetComponent<PlayerController>().thisPlayer.getState() == "sick" && GetComponent<Renderer>().CompareTag("Scientist") == false && collision.gameObject.GetComponent<Renderer>().CompareTag("Guide") == false && GetComponent<Renderer>().CompareTag("Guide") == false)
+            if ((collision.gameObject.GetComponent<PlayerController>().thisPlayer.getState() == "sick" || collision.gameObject.GetComponent<PlayerController>().thisPlayer.getState() == "beforeSick") && GetComponent<Renderer>().CompareTag("Scientist") == false && (GetComponent<PlayerController>().thisPlayer.getState() != "sick" && GetComponent<PlayerController>().thisPlayer.getState() != "beforeSick" && GetComponent<PlayerController>().thisPlayer.getState() != "dead"))
             {
                 GetComponent<Renderer>().material.color = new Color32(255, 89, 0, 0);
                 GetComponent<PlayerController>().thisPlayer.setState("beforeSick");
                 GetComponent<PlayerController>().thisPlayer.setSickDate(Time.time);
             }
-
+            
             //On compte le nombre de collisions
             countCol++;
             gameController.addScore(countCol);
@@ -100,6 +99,26 @@ public class collisions : MonoBehaviour
             Vector3.Lerp(point, navMeshData.vertices[navMeshData.indices[t + 2]], Random.value);
 
             GetComponent<Renderer>().transform.position = point;
+        }
+
+
+        //Collision d'un membre du groupe des scientifiques avec un batiment
+        //Si c'est une maison, on regarde laquelle c'est, 
+        //On regarde si on peut y entrer : nb de personnes dans le groupe, possède la clé
+        // Si on a pu y pénétrer, on met à jour liste des maisons visitées
+
+        if (GetComponent<PlayerController>().thisPlayer.getIsScientist() == true)
+        {
+            Debug.Log("scientifique == OK");
+            if (collision.gameObject.GetComponent<Rigidbody>().CompareTag("House") == true)
+            {
+                Debug.Log("maison == OK");
+                if (collision.gameObject.GetComponent<Rigidbody>().name == "House")
+                {
+                    Destroy(collision.gameObject);
+                    Debug.Log("A détruire == OK");
+                }
+            }
         }
     }
 
