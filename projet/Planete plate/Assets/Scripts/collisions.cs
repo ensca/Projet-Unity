@@ -41,10 +41,10 @@ public class collisions : MonoBehaviour
             Debug.DrawRay(contact.point, contact.normal, Color.white);
         }
         //Si le navMeshAgent rencontré est un scientifique
-        if (collision.gameObject.CompareTag("Scientist"))
+        if (collision.gameObject.CompareTag("Scientist") && (gameObject.CompareTag("Scientist") || gameObject.CompareTag("Guide")))
         {
             //if (gameObject.CompareTag("Guide") || otherPC.getIsScientist())
-                if ((GetComponent<PlayerController>().getIsScientist() == true) && otherPC.getIsScientist() == false)
+            if ((GetComponent<PlayerController>().getIsScientist() == true) && otherPC.getIsScientist() == false)
                 {
                 otherPC.setIsScientist(true);
                 collision.gameObject.GetComponent<Renderer>().material.color = Color.magenta;
