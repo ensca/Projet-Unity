@@ -45,7 +45,7 @@ public class collisions : MonoBehaviour
         {
             //if (gameObject.CompareTag("Guide") || otherPC.getIsScientist())
             if ((GetComponent<PlayerController>().getIsScientist() == true) && otherPC.getIsScientist() == false)
-                {
+            {
                 otherPC.setIsScientist(true);
                 collision.gameObject.GetComponent<Renderer>().material.color = Color.magenta;
                 gameController.addScientist(1);
@@ -67,17 +67,23 @@ public class collisions : MonoBehaviour
         }
 
         //Collision entre des navMeshAgent
-        else if (collision.gameObject.CompareTag("Classic") == true)    //Les scientifiques ne peuvent pas être malades pour le moment
+        else if (collision.gameObject.CompareTag("Classic") && !collision.gameObject.CompareTag("Guide") && !gameObject.CompareTag("Guide"))    //Les scientifiques ne peuvent pas être malades pour le moment
         {
             //Si un navMeshAgent rencontre un thisPlayer malade ou en période d'incubation (les scientifiques et le guide ne peuvent pas tomber malade)
             //Le navMeshAgent contracte la maladie mais n'est pas encore déclaré malade
             //Il devient orange pendant cette période d'incubation
-            if ((thisPlayer.getState() == "sick" ||thisPlayer.getState() == "beforeSick") && collision.gameObject.CompareTag("Scientist") == false && (otherPC.getState() != "sick" && otherPC.getState() != "beforeSick" && otherPC.getState() != "dead"))
+            if ((thisPlayer.getState() == "sick" || thisPlayer.getState() == "beforeSick") && collision.gameObject.CompareTag("Scientist") == false && (otherPC.getState() != "sick" && otherPC.getState() != "beforeSick" && otherPC.getState() != "dead"))
             {
-                otherPC.setState("beforeSick");
-                otherPC.setSickDate(Time.time);
-                collision.gameObject.GetComponent<Renderer>().material.color = new Color32(255, 89, 0, 0);
-                gameController.addBeforeSick(1);
+                int rd = Random.Range(1, 101);
+                if (rd >= otherPC.getImmuneDefences())
+                {
+                    otherPC.setState("beforeSick");
+                    otherPC.setSickDate(Time.time);
+                    collision.gameObject.GetComponent<Renderer>().material.color = new Color32(255, 89, 0, 0);
+                    gameController.addBeforeSick(1);
+                }
+                else
+                    collision.gameObject.GetComponent<Renderer>().material.color = Color.green;
             }
 
             //Si un navMeshAgent rencontre un navMeshAgent malade ou en période d'incubation(les scientifiques et le guide ne peuvent pas tomber malade)

@@ -87,7 +87,10 @@ public class GameController : MonoBehaviour {
                 nbScientists++;
             }
             else
+            {
                 pc.gameObject.tag = "Classic";
+                pc.setImmuneDefences(Random.Range(1, 101));
+            }
         }
 
         //StartCoroutine(peopleInstantiation());
