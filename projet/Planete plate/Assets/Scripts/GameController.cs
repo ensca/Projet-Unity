@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     public int NumberOfP = 100;
+    public int NumberOfScientists = 20;
     public Text ScoreText;
     private int score;
 
@@ -14,19 +15,17 @@ public class GameController : MonoBehaviour {
     private float startTime;
 
     public GameObject guide;
-
-    public GameObject person;
+    
     public Vector3 peopleValues;
-    public int peopleCount;
 
     public bool[] commonMapCity;
 
     public GameObject place1;
 
     public GameObject prefab;
+
     public Player character;
     public panelController pc;
-
 
     //Données
     private int countBeforeSicks;
@@ -80,15 +79,29 @@ public class GameController : MonoBehaviour {
 
         score = 0;
         UpdateScore();
+        int randomTag = 0;
+        int nbScientists = 0;
 
         for (int i =0; i< NumberOfP; i++)
         {
-            Vector3 v = new Vector3(Random.Range(-100F, 100F),4, Random.Range(-100F, 100F));
-
-            //Instantiate(prefab, new Vector3(i * 2.0f, 0, 0), Quaternion.identity);
+            Vector3 v = new Vector3(Random.Range(-50F, 50F),4, Random.Range(-50F, 50F));
+            
             PlayerController pc = Instantiate(prefab, v, Quaternion.identity).GetComponent<PlayerController>();
-            pc.setState("sain");
+            //pc.setState("sain");
             pc.gameObject.name = "P_Clone_" + i;
+            //Affectaction des différents tags
+            randomTag = Random.Range(0, 1);
+            if (randomTag == 0 && nbScientists < NumberOfScientists)
+            {
+                pc.gameObject.tag = "Scientist";
+                pc.gameObject.GetComponent<Renderer>().material.color = Color.gray;
+                nbScientists++;
+            }
+            else
+            {
+                pc.gameObject.tag = "Classic";
+                pc.setImmuneDefences(Random.Range(1, 101));
+            }
         }
 
         //StartCoroutine(peopleInstantiation());
@@ -141,10 +154,10 @@ public class GameController : MonoBehaviour {
     void UpdateData()
     {
         //Affichage des données du jeu
-        txtBeforeSicks.text = "Contaminés : " + countBeforeSicks.ToString();
-        txtSicks.text = "Malades : " + countSicks.ToString();
-        txtDeath.text = "Morts : " + countDeath.ToString();
-        txtScientists.text = "Groupe : " + countScientists.ToString();
+        txtBeforeSicks.text = "Contaminés : " + countBeforeSicks;
+        txtSicks.text = "Malades : " + countSicks + "/" + (NumberOfP - NumberOfScientists - countDeath + 1) + " (" + (100 * countSicks / (NumberOfP + 1 - NumberOfScientists - countDeath)) + "%)";
+        txtDeath.text = "Morts : " + countDeath + "/" + (NumberOfP - NumberOfScientists + 1) + " (" + (100 * countDeath / (NumberOfP + 1 - NumberOfScientists)) + "%)";
+        txtScientists.text = "Groupe : " + countScientists + "/" + (NumberOfScientists+1) + " (" + (100 * countScientists / (NumberOfScientists + 1)) + "%)";
     }
 
     public GameObject getGuide()
