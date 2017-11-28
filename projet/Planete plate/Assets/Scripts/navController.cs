@@ -40,8 +40,8 @@ public class navController : MonoBehaviour
 
         if (GetComponent<NavMeshAgent>().CompareTag("Guide")) //Il est guide
         {
-            if (gameController.getCountScientists() <= 3)
-            {
+            //if (gameController.getCountScientists() <= 3)
+            //{
                 if (arrivee == true || GetComponent<NavMeshAgent>().transform.position == position)
                 {
                     v = GetRandomLocation();
@@ -50,7 +50,7 @@ public class navController : MonoBehaviour
                         v = GetRandomLocation();
                     }
                 }
-            }
+            //}
             else
             {
                 /*if (gameController.commonMapCity[0] == true)

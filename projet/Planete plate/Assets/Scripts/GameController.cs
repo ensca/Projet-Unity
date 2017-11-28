@@ -7,8 +7,6 @@ public class GameController : MonoBehaviour {
 
     public int NumberOfP = 100;
     public int NumberOfScientists = 20;
-    public Text ScoreText;
-    private int score;
 
     //Affichage du temps total depuis le début du jeu
     public Text timerText;
@@ -65,9 +63,7 @@ public class GameController : MonoBehaviour {
         guide.GetComponent<PlayerController>().setIsGuide(true);
 
         startTime = Time.time;
-
-        score = 0;
-        UpdateScore();
+        
         int randomTag = 0;
         int nbScientists = 0;
 
@@ -103,20 +99,9 @@ public class GameController : MonoBehaviour {
         string minutes = ((int)t / 60).ToString();
         string secondes = (t % 60).ToString("f2");
 
-        timerText.text = "Time : " + minutes + ":" + secondes;
+        timerText.text = minutes + ":" + secondes;
 
         //P_9Time.text = "P_9 : " + GameObject.Find("P_9").GetComponent<PlayerController>().thisPlayer.getSickDate();
-    }
-
-    public void addScore(int newScoreValue)
-    {
-        score += newScoreValue;
-        UpdateScore();
-    }
-
-    void UpdateScore()
-    {
-        ScoreText.text = "Collisions : " + score.ToString();
     }
 
     public void addSick(int newSickNumber)

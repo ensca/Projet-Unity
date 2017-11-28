@@ -7,7 +7,6 @@ public class collisions : MonoBehaviour
 {
 
     private GameController gameController;
-    private int countCol;
 
     private PlayerController thisPlayer;
 
@@ -74,7 +73,7 @@ public class collisions : MonoBehaviour
             //Il devient orange pendant cette période d'incubation
             if ((thisPlayer.getState() == "sick" || thisPlayer.getState() == "beforeSick") && collision.gameObject.CompareTag("Scientist") == false && (otherPC.getState() != "sick" && otherPC.getState() != "beforeSick" && otherPC.getState() != "dead"))
             {
-                int rd = Random.Range(1, 101);
+                int rd = Random.Range(1, 4);
                 if (rd >= otherPC.getImmuneDefences())
                 {
                     otherPC.setState("beforeSick");
@@ -89,20 +88,23 @@ public class collisions : MonoBehaviour
             //Si un navMeshAgent rencontre un navMeshAgent malade ou en période d'incubation(les scientifiques et le guide ne peuvent pas tomber malade)
             //Le navMeshAgent contracte la maladie mais n'est pas encore déclaré malade
             //Il devient orange pendant cette période d'incubation
-            bool sickness = (otherPC.getState() == "sick" || otherPC.getState() == "beforeSick");
-            sickness = sickness && !gameObject.CompareTag("Scientist");
-            sickness = sickness && (thisPlayer.getState() != "sick" && thisPlayer.getState() != "beforeSick" && otherPC.getState() != "dead");
+            bool sickness = (otherPC.getState() == "sick" || otherPC.getState() == "beforeSick");   //L'autre est malade ou en période d'incubation
+            sickness = sickness && !gameObject.CompareTag("Scientist");     //Ce personnage n'est pas un scientifique
+            sickness = sickness && (thisPlayer.getState() != "sick" && thisPlayer.getState() != "beforeSick" && otherPC.getState() != "dead");  //ce joueur n'est pas encore malade, ni en période d'incubation, ni mort
             if (sickness)
             {
-                GetComponent<Renderer>().material.color = new Color32(255, 89, 0, 0);
-                thisPlayer.setState("beforeSick");
-                thisPlayer.setSickDate(Time.time);
-                gameController.addBeforeSick(1);
+                int rd = Random.Range(1, 4);
+                if (rd >= GetComponent<PlayerController>().getImmuneDefences())
+                {
+                    GetComponent<Renderer>().material.color = new Color32(255, 89, 0, 0);
+                    thisPlayer.setState("beforeSick");
+                    thisPlayer.setSickDate(Time.time);
+                    gameController.addBeforeSick(1);
+                }
+                else
+                    GetComponent<Renderer>().material.color = Color.green;
             }
             
-            //On compte le nombre de collisions
-            countCol++;
-            gameController.addScore(countCol);
         }
 
         if (collision.gameObject.CompareTag("Wall") == true || collision.gameObject.CompareTag("House") == true)
@@ -127,7 +129,7 @@ public class collisions : MonoBehaviour
 
         if (thisPlayer.getIsScientist() == true)
         {
-            Debug.Log("scientifique == OK");
+            //Debug.Log("scientifique == OK");
             if (collision.gameObject.CompareTag("House") == true)
             {
                 Debug.Log("maison == OK");
@@ -152,7 +154,7 @@ public class collisions : MonoBehaviour
 
         if (other.CompareTag("Garden"))
         {
-            Debug.Log("OK zone jardin !!! :D");
+            //Debug.Log("OK zone jardin !!! :D");
             bool[] tab = thisPlayer.getMapCity();
             tab[0] = true;
             thisPlayer.setMapCity(tab);
@@ -160,7 +162,7 @@ public class collisions : MonoBehaviour
 
         if (other.CompareTag("Key"))
         {
-            Debug.Log("OK zone key !!! :D");
+            //Debug.Log("OK zone key !!! :D");
             bool[] tab = thisPlayer.getMapCity();
             tab[1] = true;
             thisPlayer.setMapCity(tab);
@@ -168,7 +170,7 @@ public class collisions : MonoBehaviour
 
         if (other.CompareTag("Labo"))
         {
-            Debug.Log("OK zone labo !!! :D");
+            //Debug.Log("OK zone labo !!! :D");
             bool[] tab = thisPlayer.getMapCity();
             tab[3] = true;
             thisPlayer.setMapCity(tab);

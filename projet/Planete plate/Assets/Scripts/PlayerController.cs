@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     string state;           //sain, porteur, malade, mort, immunise      
                             //Ajouter ce qui concerne les vaccins
-    int immuneDefences;     //entre 1 et 100. 1 = très mauvaises défenses / 100 = très bonnes défences.
+    int immuneDefences;     //entre 1 et 3. 1 = très mauvaises défenses / 3 = très bonnes défences.
     bool isScientist;
     bool isGuide;           //Pour gérer le regroupement des scientifiques
     float sickDate;         //Date à laquelle il a été contaminé. Pur la période d'incubation et pour la mort
