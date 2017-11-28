@@ -21,10 +21,11 @@ public class GameController : MonoBehaviour {
 
     public bool[] commonMapCity;
 
-    public GameObject garden;
+    public GameObject place1;
 
     public GameObject prefab;
     public Player character;
+    public panelController pc;
 
 
     //Données
@@ -49,6 +50,15 @@ public class GameController : MonoBehaviour {
 
     void Start () {
 
+       // pc = gameObject.GetComponent<panelController>();
+
+        GameObject panelControllerObject = GameObject.FindWithTag("PanelController");
+        //Vérification de l'existence du gameController
+        if (panelControllerObject != null)
+            pc = panelControllerObject.GetComponent<panelController>();
+        if (pc == null)
+            Debug.Log("Cannot find 'GameController' script");
+
         //Initialisations des données
         countScientists = 1;
         countBeforeSicks = 0;
@@ -60,7 +70,7 @@ public class GameController : MonoBehaviour {
         commonMapCity = new bool[] { false, false, false, false, false };
 
         //Initialisation lieux du jeu
-        garden = GameObject.FindWithTag("Place1");
+        place1 = GameObject.FindWithTag("Place1");
         guide = GameObject.FindWithTag("Guide"); // Dans ce cas, on défini manuellement un guide parmi les scientifiques
         guide.GetComponent<Renderer>().material.color = Color.yellow;
         guide.GetComponent<PlayerController>().setIsScientist(true);
@@ -149,6 +159,13 @@ public class GameController : MonoBehaviour {
             if(newMap[i]==true && commonMapCity[i]==false)
             {
                 commonMapCity[i] = true;
+                if (pc == null)
+                {
+                    Debug.Log("PanelController is null");
+                    return;
+                }
+                pc.HideImage(i+1);
+                Debug.Log("Nouvelle zone découverte : " + i+1);
             }
         }
         Debug.Log("commonMap : " + commonMapCity[0] + " " + commonMapCity[1] + " " + commonMapCity[2] + " " + commonMapCity[3] + " " + commonMapCity[4]);

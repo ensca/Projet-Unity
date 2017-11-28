@@ -144,28 +144,49 @@ public class collisions : MonoBehaviour
             return;
         }
 
-        if (other.CompareTag("Garden"))
+        if (other.CompareTag("Zone1"))
         {
-            Debug.Log("OK zone jardin !!! :D");
+            Debug.Log("OK zone 1 !!! :D");
             bool[] tab = thisPlayer.getMapCity();
             tab[0] = true;
             thisPlayer.setMapCity(tab);
         }
 
-        if (other.CompareTag("Key"))
+        if (other.CompareTag("Zone2"))
         {
-            Debug.Log("OK zone key !!! :D");
+            Debug.Log("OK zone 2 !!! :D");
             bool[] tab = thisPlayer.getMapCity();
             tab[1] = true;
             thisPlayer.setMapCity(tab);
         }
 
-        if (other.CompareTag("Labo"))
+        if (other.CompareTag("Zone3"))
         {
-            Debug.Log("OK zone labo !!! :D");
+            Debug.Log("OK zone 3 !!! :D");
+            bool[] tab = thisPlayer.getMapCity();
+            tab[1] = true;
+            thisPlayer.setMapCity(tab);
+        }
+
+        if (other.CompareTag("Zone4"))
+        {
+            Debug.Log("OK zone 4 !!! :D");
+            bool[] tab = thisPlayer.getMapCity();
+            tab[1] = true;
+            thisPlayer.setMapCity(tab);
+        }
+
+        if (other.CompareTag("Zone5"))
+        {
+            Debug.Log("OK zone 5 !!! :D");
             bool[] tab = thisPlayer.getMapCity();
             tab[3] = true;
             thisPlayer.setMapCity(tab);
+        }
+        if (thisPlayer.getIsScientist() == true)
+        {
+            gameController.UpdateMapCity(thisPlayer.getMapCity());
+            Debug.Log("Test mise à jour de la map");
         }
     }
 }

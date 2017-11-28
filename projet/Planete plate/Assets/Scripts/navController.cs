@@ -53,10 +53,41 @@ public class navController : MonoBehaviour
             }
             else
             {
-                /*if (gameController.commonMapCity[0] == true)
+                if (gameController.commonMapCity[0] == true)
                 {
-                    v = gameController.garden.transform.position;
-                }*/
+                    v = gameController.place1.transform.position;
+                }
+                else
+                {
+                    System.Random r = new System.Random();
+                    int rang= r.Next(0, 5); ;
+                    while (gameController.commonMapCity[rang] == true)
+                    {
+                        rang = r.Next(0, 5);
+                    }
+                    if (rang == 0)
+                    {
+                        v = gameController.place1.transform.position;
+                    }
+                    if (rang == 1)
+                    {
+                        v = gameController.place1.transform.position;
+                    }
+                    if (rang == 2)
+                    {
+                        v = gameController.place1.transform.position;
+                    }
+                    if (rang == 3)
+                    {
+                        v = gameController.place1.transform.position;
+                    }
+                    if (rang == 4)
+                    {
+                        v = gameController.place1.transform.position;
+                    }
+
+
+                }
             }
         }
         else //il n'est pas guide
